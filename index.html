@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#120c2e">
+  <title>Task Grabber Arcade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Task Grabber home">
+      <span class="brand-icon">TG</span>
+      <span>TASK GRABBER</span>
+    </a>
+    <div class="scoreboard" aria-label="Player stats">
+      <span><i></i> PLAYER 1</span>
+      <span class="ticket-score">TICKETS <strong id="ticketScore">000</strong></span>
+      <span>DONE <strong id="doneScore">00</strong></span>
+    </div>
+    <nav class="quick-nav"><a href="#streakShop">STREAK SHOP</a><a href="#ticketShop">TICKET SHOP</a></nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span>★</span> THE PRODUCTIVITY ARCADE</div>
+      <h1>GRAB A TASK.<br><em>GET IT DONE.</em></h1>
+      <p>Load up your to-dos, take control of the claw, and let the machine choose your next mission.</p>
+      <button class="pixel-button" id="loadButton">LOAD YOUR TASKS <span>↓</span></button>
+    </section>
+
+
+    <section class="arcade-section" id="arcade">
+      <div class="machine-wrap">
+        <div class="machine-sign">
+          <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+          <div><small>★ ★ ★</small>TASK GRABBER</div>
+          <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+        </div>
+        <div class="machine-body">
+          <div class="glass" id="glass">
+            <div class="scanline"></div>
+            <div class="claw-rig" id="clawRig" aria-hidden="true">
+              <div class="cable"></div>
+              <div class="claw-head"></div>
+              <div class="claw-arm left"></div>
+              <div class="claw-arm right"></div>
+            </div>
+            <div class="task-balls" id="taskBalls"></div>
+            <div class="move-hint" id="moveHint">DRAG TO MOVE THE CLAW</div>
+            <div class="empty-machine" id="emptyMachine">
+              <span>＋</span>
+              <p>ADD TASKS TO<br>FILL THE MACHINE</p>
+            </div>
+            <div class="prize-chute">PRIZE<br>CHUTE</div>
+          </div>
+          <div class="control-deck">
+            <div class="claw-controls" aria-label="Move claw">
+              <button type="button" id="moveLeft" aria-label="Move claw left">◀</button>
+              <button type="button" id="moveRight" aria-label="Move claw right">▶</button>
+              <small>MOVE</small>
+            </div>
+            <div class="screen"><span id="machineMessage">INSERT TASKS</span><small>DRAG · ARROWS · BUTTONS</small></div>
+            <button class="grab-button" id="grabButton" disabled><span>GRAB!</span></button>
+          </div>
+        </div>
+        <div class="machine-base"><span>© 2026 TASK GRABBER CO.</span><span class="coin-slot">▮</span></div>
+      </div>
+
+      <aside class="task-panel" id="taskPanel">
+        <div class="prize-meter">
+          <div class="prize-meter-top">
+            <span>🎟️ PRIZE PROGRESS</span>
+            <strong id="ticketProgressText">0 / 100</strong>
+          </div>
+          <div class="meter-track"><div id="ticketProgressBar"></div></div>
+          <small>COMPLETE TASKS TO WIN A MYSTERY PRIZE!</small>
+        </div>
+        <div class="panel-heading">
+          <div><span class="step">01</span><p>LOAD THE MACHINE</p></div>
+          <span class="counter" id="taskCounter">0 / 8</span>
+        </div>
+        <form id="taskForm">
+          <label for="taskInput">WHAT NEEDS DOING?</label>
+          <div class="input-row">
+            <input id="taskInput" maxlength="42" placeholder="e.g. Finish the presentation" autocomplete="off">
+            <button type="button" id="addTaskButton" aria-label="Add task">＋</button>
+          </div>
+        </form>
+        <div class="task-list" id="taskList"></div>
+        <div class="how-to">
+          <span class="step">02</span>
+          <div><strong>HIT GRAB</strong><p>The claw picks your next mission. Complete it to score!</p></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="reward-hub" id="streakShop">
+      <div><div class="eyebrow">🔥 STREAK SHOP</div><h2>RARE LOOT FOR<br><em>DAILY LEGENDS.</em></h2><p>Finish every task you load today to grow your streak. Rare themes and icons unlock at 3, 7, and 14 days.</p><strong id="streakStatus">0 DAY STREAK</strong></div>
+      <div class="reward-grid" id="streakItems"></div>
+    </section>
+    <section class="reward-hub ticket-hub" id="ticketShop">
+      <div><div class="eyebrow">🎟 TICKET SHOP</div><h2>SPEND YOUR<br><em>ARCADE TICKETS.</em></h2><p>Complete missions to earn tickets, then trade them for collectible arcade rewards.</p><strong id="ticketStatus">000 TICKETS</strong></div>
+      <div class="reward-grid" id="ticketItems"></div>
+    </section>
+
+    <section class="mission" id="mission" hidden>
+      <p>YOUR NEXT MISSION</p>
+      <h2 id="missionText"></h2>
+      <div>
+        <button class="complete-button" id="completeButton">MISSION COMPLETE ✓</button>
+        <button class="skip-button" id="skipButton">PUT IT BACK</button>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>ONE TASK AT A TIME.</span><span>NO MORE DECISION PARALYSIS.</span><span>HIGH SCORE: YOU.</span></footer>
+  <div class="toast" id="toast" role="status"></div>
+  <div class="prize-modal" id="prizeModal" hidden>
+    <div class="prize-card" role="dialog" aria-modal="true" aria-labelledby="prizeTitle">
+      <div class="prize-rays" aria-hidden="true"></div>
+      <p>★ JACKPOT! ★</p>
+      <div class="prize-emoji" id="prizeEmoji">🏆</div>
+      <h2 id="prizeTitle">PRIZE UNLOCKED!</h2>
+      <h3 id="prizeName"></h3>
+      <p class="prize-copy" id="prizeCopy"></p>
+      <button class="complete-button" id="claimPrize">CLAIM PRIZE</button>
+    </div>
+  </div>
+  <script src="script.js?v=5"></script>
+</body>
+</html>
